@@ -16,13 +16,6 @@ const vision = {
   title: "Our Vision",
   body: "Graduates leave with more than a certificate: working technique, a portfolio, OJT hours on real productions, and an alumni network that stays useful long after the final class.",
 };
-
-const teamSlots = [
-  { name: site.founder, role: "Founder & Lead Instructor", photo: "/images/instructor.jpg", ready: true },
-  { name: "Instructor profiles", role: "Bridal · SFX · Airbrush · Hair", photo: null, ready: false },
-  { name: "Teaching assistants", role: "Studio floor support", photo: null, ready: false },
-  { name: "Guest educators", role: "Industry intensives", photo: null, ready: false },
-];
 ---
 
 <BaseLayout
@@ -31,7 +24,6 @@ const teamSlots = [
   ogImage="/images/instructor.jpg"
 >
   <PageHero
-    eyebrow="About us"
     title="A School Built on Craft and Correction"
     intro="Makeup is a physical skill. Brush pressure, blending timing, and skin reading only improve with a trained instructor standing beside you. That is why every program here runs face to face."
     image="/images/instructor.jpg"
@@ -42,7 +34,7 @@ const teamSlots = [
     <div class="wrap grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
       {
         [mission, vision].map((slot) => (
-          <div class="reveal border-t-2 border-gold pt-8">
+          <div class="reveal border-t border-line pt-8">
             <h2 class="font-display text-3xl text-balance">{slot.title}</h2>
             <p class="mt-5 text-muted leading-relaxed text-lg">{slot.body}</p>
           </div>
@@ -53,40 +45,44 @@ const teamSlots = [
 
   <!-- Faye Young -->
   <section class="py-20 md:py-28">
-    <div class="wrap grid grid-cols-1 lg:grid-cols-12 gap-12">
-      <div class="lg:col-span-5 reveal">
-        <img
-          src="/images/instructor.jpg"
-          alt="An instructor demonstrating makeup technique at the academy"
-          class="rounded-card w-full aspect-[4/5] object-cover"
-          loading="lazy"
-          width="800"
-          height="1000"
-        />
-        <p class="text-xs text-muted mt-3">Instruction at the Quezon City studio.</p>
-      </div>
-      <div class="lg:col-span-7 reveal">
-        <p class="eyebrow text-muted mb-5">{site.founder} · Founder & Lead Instructor</p>
-        <h2 class="display-lg text-balance">A Pioneering Figure in Philippine Makeup Artistry.</h2>
-        <div class="mt-6 space-y-5 text-muted leading-relaxed">
-          <p>
-            {site.founder} has worked across bridal couture, fashion editorial, film and television,
-            theatre, and international pageant stages for over 27 years.
-          </p>
-          <p>
-            She has been faculty at the Australian College of Hair Design and Beauty Manila since
-            2015, training the next generation of makeup artists. Her technical background includes
-            prosthetics and airbrush makeup, studied at Singapore's Top to Toe Makeup College, with
-            further training under Filipino makeup educator Cecille Rebollos.
-          </p>
+    <div class="wrap">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 reveal">
+          <img
+            src="/images/classroom.jpg"
+            alt="An instructor demonstrating application on a student at a studio vanity"
+            class="rounded-card w-full aspect-[4/3] object-cover"
+            loading="lazy"
+            width="1280"
+            height="720"
+          />
+          <p class="text-xs text-muted mt-3">Instruction at the Quezon City studio.</p>
         </div>
+        <div class="lg:col-span-7 reveal">
+          <h2 class="display-lg text-balance">A Pioneering Figure in Philippine Makeup Artistry.</h2>
+          <div class="mt-6 space-y-5 text-muted leading-relaxed">
+            <p>
+              {site.founder} has worked across bridal couture, fashion editorial, film and television,
+              theatre, and international pageant stages for over 27 years.
+            </p>
+            <p>
+              She has been faculty at the Australian College of Hair Design and Beauty Manila since
+              2015, training the next generation of makeup artists. Her technical background includes
+              prosthetics and airbrush makeup, studied at Singapore's Top to Toe Makeup College, with
+              further training under Filipino makeup educator Cecille Rebollos.
+            </p>
+          </div>
+        </div>
+      </div>
 
-        <p class="eyebrow text-muted mt-12 mb-5">Credentials & recognition</p>
-        <ul class="border-t border-line">
+      <!-- Full-width so the ledger is not stranded under the shorter column -->
+      <div class="mt-16 md:mt-20">
+        <h3 class="font-display text-2xl mb-6">Credentials &amp; recognition</h3>
+        <ul class="ledger border-t border-line grid grid-cols-1 md:grid-cols-2 gap-x-14">
           {
             founderCredentials.map((c) => (
-              <li class="reveal flex gap-4 items-baseline py-3.5 border-b border-line text-sm">
-                <span class="text-gold-ink" aria-hidden="true">—</span>
+              <li class="reveal flex gap-4 items-start py-3.5 border-b border-line text-sm">
+                <span class="mt-[0.72rem] w-4 h-px bg-gold-ink shrink-0" aria-hidden="true"></span>
                 {c}
               </li>
             ))
@@ -96,63 +92,40 @@ const teamSlots = [
     </div>
   </section>
 
-  <!-- Teaching team slots -->
-  <section class="bg-cream border-y border-line/70 py-20">
-    <div class="wrap">
-      <div class="max-w-2xl mb-10">
-        <p class="eyebrow text-muted mb-4">Our teaching team</p>
-        <h2 class="font-display text-3xl text-balance">Every Instructor Is a Working Professional.</h2>
-        <p class="mt-5 text-muted leading-relaxed">
-          Instructors specialize across bridal, SFX, airbrush, hairstyling, and editorial makeup.
-          Each brings current client and production experience into the room.
+  <!-- Teaching team -->
+  <section class="bg-cream border-y border-line/70 py-20 md:py-24">
+    <div class="wrap grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-6 reveal">
+        <h2 class="font-display text-3xl md:text-4xl text-balance">Every Instructor Is a Working Professional.</h2>
+        <p class="mt-6 text-muted leading-relaxed text-lg">
+          Instructors specialize across bridal, SFX, airbrush, hairstyling, and
+          editorial makeup. Each brings current client and production experience
+          into the room, and correction is given at the chair, on your hand, on
+          the model in front of you.
         </p>
+        <p class="mt-5 text-muted leading-relaxed">
+          Ask who is teaching your dates when you inquire. We will tell you
+          plainly, and if that artist's specialty is not the one you need, we
+          will point you to the class that is.
+        </p>
+        <a href="/contact" class="btn btn-primary mt-8">Ask about your class</a>
       </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {
-          teamSlots.map((m) => (
-            <article class="reveal rounded-card bg-paper border border-line/70 p-6 flex flex-col">
-              {m.photo ? (
-                <img
-                  src={m.photo}
-                  alt={m.name}
-                  class="rounded-card w-full aspect-[4/3] object-cover mb-5"
-                  loading="lazy"
-                  width="640"
-                  height="480"
-                />
-              ) : (
-                <div
-                  class="rounded-card w-full aspect-[4/3] bg-surface border border-line/60 mb-5 flex items-center justify-center"
-                  aria-hidden="true"
-                >
-                  <span class="font-display text-4xl text-line">···</span>
-                </div>
-              )}
-              <h3 class="font-display text-xl leading-snug">{m.name}</h3>
-              <p class="mt-1.5 text-sm text-muted">{m.role}</p>
-              {!m.ready && (
-                <p class="mt-4 pt-4 border-t border-line text-xs text-muted leading-relaxed">
-                  Profile slot ready for photo and bio.
-                </p>
-              )}
-            </article>
-          ))
-        }
+      <div class="lg:col-span-6 reveal">
+        <img
+          src="/images/classroom-2.jpg"
+          alt="An instructor and student working through a look at a lit studio vanity"
+          class="rounded-card w-full aspect-[4/3] object-cover"
+          loading="lazy"
+        />
       </div>
-      <p class="mt-8 text-sm text-muted border-l-2 border-gold pl-5 max-w-2xl">
-        Instructor bios and photos are being collected from the teaching team. This section fills in
-        as they arrive.
-      </p>
     </div>
   </section>
 
   <!-- Who thrives here -->
   <section class="py-20 md:py-28">
     <div class="wrap">
-      <p class="eyebrow text-muted mb-4">Who thrives here</p>
       <h2 class="display-lg mb-12">A Path for Every Artist.</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="ledger border-t border-line">
         {
           [
             {
@@ -160,22 +133,21 @@ const teamSlots = [
               d: "Build a reliable everyday routine or your first paid skill set.",
             },
             {
-              t: "Bridal Artists",
+              t: "Bridal artists",
               d: "Book weddings with confidence, from trial to ceremony.",
             },
             {
-              t: "Fashion & Editorial",
+              t: "Fashion and editorial",
               d: "Deliver set-ready work for designers, photographers, and stylists.",
             },
             {
-              t: "SFX Creators",
+              t: "SFX creators",
               d: "Train for film, TV, theatre, and character work.",
             },
-          ].map((x, i) => (
-            <div class="reveal border-t-2 border-gold pt-5">
-              <span class="font-display text-gold-ink text-lg">0{i + 1}</span>
-              <h3 class="font-display text-2xl mt-2">{x.t}</h3>
-              <p class="mt-3 text-sm text-muted leading-relaxed">{x.d}</p>
+          ].map((x) => (
+            <div class="reveal grid grid-cols-1 md:grid-cols-[15rem_1fr] md:gap-x-12 py-6 border-b border-line">
+              <h3 class="font-display text-2xl">{x.t}</h3>
+              <p class="mt-1.5 md:mt-0 text-muted leading-relaxed">{x.d}</p>
             </div>
           ))
         }

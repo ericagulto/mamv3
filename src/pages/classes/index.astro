@@ -3,32 +3,60 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import CourseCard from "../../components/CourseCard.astro";
 import InquiryCTA from "../../components/InquiryCTA.astro";
-import { courses, formatTuition } from "../../data/courses";
+import { courses, levelPaths, standardInclusions } from "../../data/courses";
+import type { Course } from "../../data/courses";
+
+const bySlug = new Map(courses.map((c) => [c.slug, c]));
+const byLevel = (slugs: readonly string[]) =>
+  slugs
+    .map((s) => bySlug.get(s))
+    .filter((c): c is Course => c !== undefined);
 ---
 
 <BaseLayout
   title="All Makeup & Hairstyling Classes in Quezon City | Makeup Academy Manila"
-  description="11 face-to-face makeup and hairstyling programs at the Quezon City studio — from a 1-day personal class to a 10-day prosthetics course, with materials, certificate, portfolio images and OJT included."
-  ogImage="/images/class-hands-on.jpg"
+  description="11 face-to-face makeup and hairstyling programs at the Quezon City studio, from a 1-day personal class to a 10-day prosthetics course, with materials, certificate, portfolio images and OJT included."
+  ogImage="/images/classroom.jpg"
 >
   <PageHero
-    eyebrow="Makeup Academy Manila · Quezon City"
     title="Classes & Courses"
     intro="From a one-day personal class to a ten-day prosthetics intensive: hands-on, materials included, with a certificate, portfolio images, and OJT opportunities."
-    image="/images/class-hands-on.jpg"
-  />
+    image="/images/classroom.jpg"
+  >
+    <div slot="cta" class="mt-9 flex flex-wrap gap-4">
+      <a href="/contact" class="btn btn-gold">Talk to an advisor</a>
+      <a href="#programs" class="btn btn-outline-light">See the programs</a>
+    </div>
+  </PageHero>
 
-  <section class="py-20 md:py-24">
-    <div class="wrap">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.map((c, i) => <CourseCard course={c} eager={i < 3} />)}
-      </div>
+  <section id="programs" class="py-20 md:py-24 scroll-mt-24">
+    <div class="wrap space-y-20 md:space-y-24">
+      {
+        levelPaths.map((group) => {
+          const groupCourses = byLevel(group.slugs);
+          return (
+            <div>
+              <div class="sticky top-20 md:top-24 z-20 bg-paper flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 border-b border-line pb-6">
+                <h2 class="font-display text-3xl md:text-4xl">{group.name}</h2>
+                <p class="sm:text-right sm:max-w-md text-sm text-muted leading-relaxed">
+                  {group.blurb}
+                </p>
+              </div>
+              <div class:list={["mt-9 grid grid-cols-1 md:grid-cols-2 gap-6", groupCourses.length === 4 ? "lg:grid-cols-2" : "lg:grid-cols-3"]}>
+                {groupCourses.map((c, i) => (
+                  <CourseCard course={c} eager={group.key === "beginner" && i < 2} />
+                ))}
+              </div>
+            </div>
+          );
+        })
+      }
     </div>
   </section>
 
   <section class="bg-cream border-y border-line/70 py-20 md:py-24">
     <div class="wrap grid grid-cols-1 lg:grid-cols-12 gap-12">
-      <div class="lg:col-span-4 reveal">
+      <div class="lg:col-span-5 reveal">
         <h2 class="font-display text-3xl text-balance">How Enrollment Works</h2>
         <p class="mt-5 text-muted leading-relaxed">
           Class sizes stay small so every student gets direct instructor time.
@@ -42,50 +70,23 @@ import { courses, formatTuition } from "../../data/courses";
         <a href="/contact" class="btn btn-primary mt-8">Reserve Your Spot</a>
       </div>
 
-      <div class="lg:col-span-8">
-        <h2 class="eyebrow text-muted mb-6">All Courses at a Glance</h2>
-        <div class="border-t border-line">
+      <div class="lg:col-span-7 reveal">
+        <h2 class="font-display text-3xl text-balance">Every Tuition Includes</h2>
+        <ul class="mt-7 border-t border-line">
           {
-            courses.map((c) => (
-              <a
-                href={`/classes/${c.slug}`}
-                class="group reveal grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_110px_130px_auto] items-baseline gap-x-6 py-5 border-b border-line hover:bg-paper transition-colors px-2"
-              >
-                <span class="font-display text-xl md:text-2xl group-hover:text-wine-soft transition-colors">
-                  {c.shortName}
-                </span>
-                <span class="hidden sm:block text-sm text-muted">{c.level}</span>
-                <span class="text-sm text-muted md:text-right whitespace-nowrap">
-                  {c.days} {c.days === 1 ? "day" : "days"}
-                </span>
-                <span class="font-display text-xl md:text-2xl text-right whitespace-nowrap">
-                  {formatTuition(c.tuition)}
-                </span>
-              </a>
+            standardInclusions.map((item) => (
+              <li class="flex items-baseline gap-5 py-4 border-b border-line">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold shrink-0 translate-y-[-2px]" aria-hidden="true"></span>
+                <span class="text-lg">{item}</span>
+              </li>
             ))
           }
-        </div>
-        <p class="text-xs text-muted mt-6 px-2">
-          Tuition includes all training materials. Succeeding courses receive a 10% discount.
+        </ul>
+        <p class="mt-6 text-sm text-muted leading-relaxed">
+          Foundations assume no experience. Intermediate classes add specialty
+          technique. Professional tracks carry OJT on real bookings. Tell us
+          where you are and we will place you honestly.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20 md:py-24 text-center">
-    <div class="wrap max-w-2xl reveal">
-      <p class="eyebrow text-muted mb-4">Programs & tuition</p>
-      <h2 class="display-lg text-balance">Eleven Programs. One Studio Standard.</h2>
-      <p class="mt-5 text-muted leading-relaxed">
-        Foundations assume no experience. Intermediate classes add specialty
-        technique. Professional tracks carry OJT on real bookings. Every tuition
-        covers materials, your certificate, portfolio images, and a class small
-        enough for direct instructor correction — tell us where you are and we
-        will place you honestly.
-      </p>
-      <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-        <a href="/contact" class="btn btn-primary">Talk to Us</a>
-        <a href="#main" class="btn btn-outline">Browse All Courses</a>
       </div>
     </div>
   </section>

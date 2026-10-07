@@ -17,6 +17,8 @@ export interface Course {
   audience: string;
   image: string;
   imageAlt: string;
+  /** object-position for portraits cropped into the wide hero band */
+  imageFocus?: string;
   modules: CourseModule[];
   howItWorks: string;
   related: string[];
@@ -45,7 +47,7 @@ export const courses: Course[] = [
     intro:
       "A one-day personal makeup class. Master foundation matching, contouring, eye looks, and everyday glam with hands-on coaching, all materials provided.",
     audience:
-      "Anyone who wants to look polished and confident every day: students, young professionals, and beginners curious about professional makeup. No experience needed — just bring yourself.",
+      "Anyone who wants to look polished and confident every day: students, young professionals, and beginners curious about professional makeup. No experience needed. Just bring yourself.",
     image: "/images/personal.jpg",
     imageAlt: "Model with a clean, no-makeup makeup look applied in class",
     modules: [
@@ -53,11 +55,11 @@ export const courses: Course[] = [
       { title: "Face Shape and Eye Shape", body: "Understand your proportions and learn which techniques suit your features best." },
       { title: "Highlight and Low Light", body: "Use light and shadow to enhance your features naturally." },
       { title: "Color Theory, Warm and Cool Tones", body: "Build a working sense of color so every look comes together and harmonizes." },
-      { title: "Prep and Sanitation", body: "Cleanse, tone, and moisturize the way professionals do — and keep your kit and skin safe." },
+      { title: "Prep and Sanitation", body: "Cleanse, tone, and moisturize the way professionals do, and keep your kit and skin safe." },
       { title: "Correctors, Concealers, and Foundation", body: "Correct darkness, redness, and blemishes, then build a flawless, long-lasting base." },
       { title: "Brows, Eyeshadow, Lashes, and Liners", body: "Shape and fill brows; blend everyday and evening eye looks; apply liner styles and lashes that define the eyes." },
       { title: "Contours, Blush, and Lips", body: "Sculpt with corrective and enhancement contours, place fresh natural color, and finish with healthy, polished lips." },
-      { title: "Finishing Touches", body: "Simple hair care and styling so hair complements your makeup — plus a list of personal tools worth buying." },
+      { title: "Finishing Touches", body: "Simple hair care and styling so hair complements your makeup, plus a list of personal tools worth buying." },
     ],
     howItWorks:
       "Classes stay small so you get one-on-one attention. Your instructor demonstrates each technique on a live face, then guides your hands as you practice on yourself, correcting form until each look feels natural.",
@@ -76,8 +78,8 @@ export const courses: Course[] = [
       "A 5-day makeup foundations program covering makeup science, face chart mapping, professional tools, day and night looks, and a graduation pictorial for your portfolio.",
     audience:
       "Beginners who want to start a professional makeup career the right way, plus self-taught artists ready to close the gaps in their technique and product knowledge. No experience required.",
-    image: "/images/class-hands-on.jpg",
-    imageAlt: "Students practicing makeup application on models in the studio",
+    image: "/images/classroom.jpg",
+    imageAlt: "An instructor demonstrating application on a student at a studio vanity",
     modules: [
       { title: "The Makeup Basics", body: "Facial structures, skin, tones, types, and shapes." },
       { title: "The Makeup Science", body: "Theory and discussion, face chart mapping, tools and the makeup station, the lighting system, a master list of a basic kit, and the cosmetics industry itself." },
@@ -112,7 +114,7 @@ export const courses: Course[] = [
       { title: "HD, Photography, High Fashion, Avant-garde", body: "Looks that read beautifully on camera and on the runway." },
       { title: "Film, TV, Theatrical, SFX Background", body: "Production skills for sets and stages, plus the prosthetics grounding every set artist needs." },
       { title: "Bridal Makeup and Industry Foreground", body: "Bridal looks with the professional polish clients pay for." },
-      { title: "Business Compass and Real OJT", body: "Pricing, positioning, and running your artistry as a business — with hands-on exposure on real industry work." },
+      { title: "Business Compass and Real OJT", body: "Pricing, positioning, and running your artistry as a business, with hands-on exposure on real industry work." },
       { title: "Portfolio Building", body: "A curated portfolio that wins clients and gigs." },
     ],
     howItWorks:
@@ -132,8 +134,9 @@ export const courses: Course[] = [
       "A 5-day bridal makeup masterclass: long-wear bridal techniques, entourage application, client communication, and how to build a profitable bridal package.",
     audience:
       "Makeup artists who want to win bridal clients, from consultation and trial sessions to managing wedding-day timelines and working with photographers and coordinators.",
-    image: "/images/course-bridal.jpg",
-    imageAlt: "Bridal makeup applied on a Filipina model",
+    image: "/images/bridal.jpg",
+    imageAlt: "A bride in a lace gown with her bridal makeup and hair finished",
+    imageFocus: "center 16%",
     modules: [
       { title: "Bridal Fundamentals", body: "Understanding bridal styles, skincare for brides, and color composition for bridal looks." },
       { title: "Bridal Techniques", body: "Foundation matching and application, concealing for flawless skin, contouring and highlighting, eyebrow shaping and defining." },
@@ -142,7 +145,7 @@ export const courses: Course[] = [
       { title: "Final Project", body: "Create a complete bridal makeup look showcasing everything you learned." },
     ],
     howItWorks:
-      "You work on real bridal faces across the program — brides-to-be and entourage members of every age. Learn the trial process, package building, and how to run wedding-day timelines with confidence.",
+      "You work on real bridal faces across the program: brides-to-be and entourage members of every age. Learn the trial process, package building, and how to run wedding-day timelines with confidence.",
     related: ["basic-hairstyling-course", "advanced-professional-makeup-class", "airbrush-master-class-pro-class"],
   },
   {
@@ -155,15 +158,15 @@ export const courses: Course[] = [
     days: 3,
     tuition: 35000,
     intro:
-      "Professional airbrush makeup training — seamless, long-wearing, camera-proof finishes using industry airbrush systems, in 3 hands-on days.",
+      "Professional airbrush makeup training: seamless, long-wearing, camera-proof finishes using industry airbrush systems, in 3 hands-on days.",
     audience:
-      "Working artists who want the airbrush advantage for bridal, editorial, and HD work — plus graduates of our fundamentals program ready to specialize.",
-    image: "/images/course-airbrush.jpg",
-    imageAlt: "Artist applying airbrush foundation to a model's cheek at a studio station",
+      "Working artists who want the airbrush advantage for bridal, editorial, and HD work, plus graduates of our fundamentals program ready to specialize.",
+    image: "/images/airbrush.jpg",
+    imageAlt: "The studio airbrush compressor, foundation shades and tools laid out at a station",
     modules: [
       { title: "Skin, Tone, and Face Reading on Air", body: "Foundations that transfer to airbrush work, matching tone and undertone, and adapting placement to every face and eye shape." },
       { title: "Color Theory Aerograph", body: "Color mixing and application through the airbrush, with tone harmony for warm and cool work." },
-      { title: "Prep and Prime on Air", body: "Cleanse, tone, moisturize, and primer — plus manual correction before you spray for a flawless canvas." },
+      { title: "Prep and Prime on Air", body: "Cleanse, tone, moisturize, and primer, plus manual correction before you spray for a flawless canvas." },
       { title: "System Care and Cleaning", body: "Keep your airbrush system performing at its best." },
       { title: "Brows, Contours, and Eyeshadow on Air Strokes", body: "Precise brows, sculpted contours, and blended, camera-proof eye looks built with controlled air strokes." },
     ],
@@ -189,9 +192,9 @@ export const courses: Course[] = [
     modules: [
       { title: "Eyeshadows and Tools", body: "Powder versus cream shadows, cream base paints, and an overview of airbrush tools." },
       { title: "Eye Shapes and Corrective Technique", body: "Identify every eye shape, tailor techniques to each, and correct common issues." },
-      { title: "Design for Occasion and Location", body: "Daytime versus evening, special occasions, photoshoots, and film — adapting makeup to the setting." },
+      { title: "Design for Occasion and Location", body: "Daytime versus evening, special occasions, photoshoots, and film: adapting makeup to the setting." },
       { title: "Brands and Product Selection", body: "Choosing shadows for different skin types and eye colors, high-end versus drugstore." },
-      { title: "Advanced Looks", body: "Dimension and depth, cut crease, smoky eye, and airbrush blending — with troubleshooting for common challenges." },
+      { title: "Advanced Looks", body: "Dimension and depth, cut crease, smoky eye, and airbrush blending, with troubleshooting for common challenges." },
       { title: "Portfolio Looks and Certification", body: "Build custom designs and a portfolio of looks, close with a practical evaluation and certificate award." },
     ],
     howItWorks:
@@ -208,17 +211,17 @@ export const courses: Course[] = [
     days: 1,
     tuition: 7500,
     intro:
-      "A 1-day corporate makeup program: a polished, professional signature look for work, events, and camera — with skincare prep, day-to-night transitions, and career tips.",
+      "A 1-day corporate makeup program: a polished, professional signature look for work, events, and camera, with skincare prep, day-to-night transitions, and career tips.",
     audience:
       "Working professionals who want a consistent, camera-ready presence, plus artists adding corporate and executive clients to their roster.",
     image: "/images/course-corporate.jpg",
     imageAlt: "A professional applying corporate makeup at a vanity while an instructor guides her",
     modules: [
       { title: "Corporate Makeup and Skincare Prep", body: "Styles suited to corporate environments and the skincare prep that builds a flawless base." },
-      { title: "Your Signature Look", body: "A polished, natural everyday look — emphasizing features while staying professional." },
+      { title: "Your Signature Look", body: "A polished, natural everyday look that emphasizes your features while staying professional." },
       { title: "Event and Camera Makeup", body: "Enhancing features for photography and video, with long-lasting event makeup." },
       { title: "Day to Night Transition", body: "Turn a daytime look into evening elegance with depth and drama." },
-      { title: "Application Techniques and Hygiene", body: "Foundation, contour, highlight, and corporate-appropriate eyes — plus professional hygiene standards and etiquette." },
+      { title: "Application Techniques and Hygiene", body: "Foundation, contour, highlight, and corporate-appropriate eyes, plus professional hygiene standards and etiquette." },
       { title: "Business and Marketing Tips", body: "Building a corporate makeup career, marketing yourself, and managing client consultations." },
     ],
     howItWorks:
@@ -264,7 +267,7 @@ export const courses: Course[] = [
     days: 10,
     tuition: 50000,
     intro:
-      "A 10-day prosthetics makeup course: live casting, molding and sculpting, silicone, latex, and gelatin work, application and removal — build film-grade pieces from scratch.",
+      "A 10-day prosthetics makeup course: live casting, molding and sculpting, silicone, latex, and gelatin work, application and removal. Build film-grade pieces from scratch.",
     audience:
       "Artists ready for the deepest craft in the industry: prosthetic fabrication and application for film, TV, and high-end events.",
     image: "/images/course-prosthetics.jpg",
@@ -294,13 +297,13 @@ export const courses: Course[] = [
     intro:
       "A 3-day hairstyling course: prep, set, curl, and finish bridal and event hair on every texture, with the right products and professional Dyson tools included.",
     audience:
-      "Makeup artists adding hairstyling to their services — and beginners starting out in bridal and event beauty.",
+      "Makeup artists adding hairstyling to their services, and beginners starting out in bridal and event beauty.",
     image: "/images/course-hair-basic.jpg",
     imageAlt: "Stylist setting a curl through long hair with a professional wand",
     modules: [
-      { title: "Prepping the Bride and Entourage", body: "Hair drying, setting products, setting and curling, alpha and beta bonds — and five designs." },
+      { title: "Prepping the Bride and Entourage", body: "Hair drying, setting products, setting and curling, alpha and beta bonds, and five designs." },
       { title: "Hair Textures", body: "Coarse, straightened, natural curls, damaged, healthy, colored, thin, long, and short." },
-      { title: "Product Application", body: "Mousse, texturizers, clips, gels, and sprays — when and how." },
+      { title: "Product Application", body: "Mousse, texturizers, clips, gels, and sprays: when and how." },
       { title: "Styling Tools (Dyson)", body: "Blow dryers, curling rods and barrels, flat irons, silicone pads, pins, sectioning clamps, segmenters, velcro, fibers, glitters, and accessories." },
     ],
     howItWorks:
@@ -317,14 +320,14 @@ export const courses: Course[] = [
     days: 5,
     tuition: 30000,
     intro:
-      "A 5-day advanced salon hair course — master cutting systems, color theory, and salon business operations so you can work in professional salons, editorial settings, and your own studio with confidence.",
+      "A 5-day advanced salon hair course. Master cutting systems, color theory, and salon business operations so you can work in professional salons, editorial settings, and your own studio with confidence.",
     audience:
-      "Stylists and salon professionals who want cutting, color, and business systems — from classic shapes through fashion color to running the floor.",
+      "Stylists and salon professionals who want cutting, color, and business systems, from classic shapes through fashion color to running the floor.",
     image: "/images/course-hair-salon.jpg",
     imageAlt: "Colorist painting a foil section of hair color in the salon studio",
     modules: [
-      { title: "Hair Cutting 101", body: "The core systems every salon artist builds on: the female straight cut, layers that move with the head, short hair that holds its shape, and a real introduction to barbering — with a door opened to avant-garde cutting for editorial and runway work." },
-      { title: "Prepping to Color Hair", body: "Hair analysis and color theory that transfer to the chair: how colorants work, timing, lifting and deposit, bleaching, rebonding, fashion colors, treatments, and color removal — plus alpha and beta bonds so you understand why hair lifts the way it does." },
+      { title: "Hair Cutting 101", body: "The core systems every salon artist builds on: the female straight cut, layers that move with the head, short hair that holds its shape, and a real introduction to barbering, with a door opened to avant-garde cutting for editorial and runway work." },
+      { title: "Prepping to Color Hair", body: "Hair analysis and color theory that transfer to the chair: how colorants work, timing, lifting and deposit, bleaching, rebonding, fashion colors, treatments, and color removal, plus alpha and beta bonds so you understand why hair lifts the way it does." },
       { title: "Salon Business Systems", body: "Client flow and booking that keeps the schedule full, service menus that make money, product retail, and the daily systems that turn a stylist into a business. The part most courses skip." },
     ],
     howItWorks:
@@ -340,7 +343,6 @@ export function getCourse(slug: string): Course | undefined {
 export const levelPaths = [
   {
     key: "beginner",
-    eyebrow: "Level 01 · Foundations",
     name: "Beginner",
     blurb:
       "New to makeup or building your first skill set. Start here to learn correct technique from the start.",
@@ -348,7 +350,6 @@ export const levelPaths = [
   },
   {
     key: "intermediate",
-    eyebrow: "Level 02 · Specialization",
     name: "Intermediate",
     blurb:
       "Have the basics down. Ready to specialize in bridal, airbrush, hairstyling, or eye makeup.",
@@ -356,7 +357,6 @@ export const levelPaths = [
   },
   {
     key: "professional",
-    eyebrow: "Level 03 · Career",
     name: "Professional",
     blurb:
       "Pursuing makeup as a career. Advanced technique, SFX, prosthetics, and industry-level training.",
@@ -365,5 +365,7 @@ export const levelPaths = [
 ] as const;
 
 export function formatTuition(amount: number): string {
+  // Neither Boska nor Satoshi ships U+20B1, so "₱" falls back to a system serif
+  // whose zero-ish advance collides with the digits. The original site writes PHP.
   return `PHP ${amount.toLocaleString("en-PH")}`;
 }

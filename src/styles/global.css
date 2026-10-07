@@ -3,17 +3,48 @@
    everything else is rebuilt for Astro + Tailwind v4. */
 
 @font-face {
-  font-family: "DM Serif Text";
-  src: url("/fonts/DMSerifText-Regular.woff2") format("woff2");
+  font-family: "Boska";
+  src: url("/fonts/Boska-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "DM Serif Text";
-  src: url("/fonts/DMSerifText-Italic.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Boska";
+  src: url("/fonts/Boska-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Newsreader: variable weight + optical size, latin subset, self-hosted. The
+   optical-size axis is the point — the browser swaps to the sturdy "News" grade
+   outlines at text sizes and the high-contrast display grade at headline sizes. */
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/Newsreader-Variable.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/Newsreader-VariableItalic.woff2") format("woff2");
+  font-weight: 200 800;
   font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cinzel Decorative";
+  src: url("/fonts/CinzelDecorative-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cinzel Decorative";
+  src: url("/fonts/CinzelDecorative-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
@@ -40,6 +71,12 @@
 
 @import "tailwindcss";
 
+/* Reference material, notes, and generated image dumps sit in the repo but are
+   not UI source; without these, Tailwind compiles class names found inside them. */
+@source not "../../site-reference";
+@source not "../../.impeccable";
+@source not "../../vibe_images";
+
 @theme {
   /* Brand palette — from the original Elementor kit */
   --color-wine: #3b001a; /* primary */
@@ -60,11 +97,16 @@
   --color-line: #d8d8d5; /* hairlines on light */
   --color-line-strong: #767676; /* form control borders — ≥4.5:1 on white */
 
-  --font-display: "DM Serif Text", Georgia, serif;
+  --font-display: "Newsreader", "Boska", "Playfair Display", Georgia, serif;
   --font-body: "Satoshi", "Segoe UI", sans-serif;
+  /* Cinzel Decorative is caps-only and wide: it is a plate face for numerals and
+     short marks, never a headline face. */
+  --font-numeral: "Cinzel Decorative", var(--font-display);
 
-  /* Shape language: buttons are pills, cards and content imagery share this radius */
+  /* Shape language: actions are pills, surfaces and imagery share --radius-card,
+     form fields sit one tier below it so they read as inputs, not cards. */
   --radius-card: 1rem;
+  --radius-field: 0.5rem;
 }
 
 @layer base {
@@ -95,12 +137,44 @@
     background: var(--color-gold);
     color: var(--color-wine-deep);
   }
+  /* A heading that relies on inheriting a section's `text-white` loses to the
+     element rule above, which paints it the same hex as a wine background. */
+  .text-white :is(h1, h2, h3, h4, h5, h6) {
+    color: inherit;
+  }
   :focus-visible {
     outline: 2px solid var(--color-focus);
     outline-offset: 2px;
   }
   img {
     max-width: 100%;
+  }
+  a {
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 1px;
+  }
+  input,
+  textarea,
+  select {
+    caret-color: var(--color-wine);
+  }
+  ::placeholder {
+    color: var(--color-muted);
+  }
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-cream);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line-strong);
+    border: 3px solid var(--color-cream);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-wine);
   }
 }
 
@@ -113,9 +187,55 @@
   @media (min-width: 768px) {
     padding-inline: 2rem;
   }
+  /* 1140px came from the original Elementor kit, which never saw a display
+     wider than 1440. Above that the frame grows with the viewport and stops at
+     1400, so the gutters widen instead of the reading measure. */
+  @media (min-width: 1280px) {
+    max-width: min(87.5rem, calc(40rem + 41.6667vw));
+  }
 }
 
 /* ---------- Type helpers ---------- */
+
+/* Weight discipline for the display face: high-contrast serifs lose their
+   hairlines below roughly 30px, so Regular is reserved for the two display
+   scales and anything that carries information is set Bold. Unlayered so it
+   wins over the base heading rule, and overruled by an explicit font-weight
+   utility. */
+.font-display {
+  font-weight: 700;
+}
+
+/* Ledger numerals are the one place the plate face is allowed to speak. Declared
+   after .font-display so its weight wins on elements that carry both. */
+.numeral {
+  font-family: var(--font-numeral);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: 0.04em;
+}
+
+/* Pull-quotes sit at display scale, where Regular is the intended weight. */
+.quote-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+/* Newsreader ships text (old-style) figures by default, so in a price column the
+   3, 5 and 7 drop below the baseline of the 0s. Money and stats read as columns. */
+.font-display,
+.quote-display,
+.display-xl,
+.display-lg,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-variant-numeric: lining-nums;
+}
+
 .eyebrow {
   font-size: 0.78rem;
   letter-spacing: 0.2em;
@@ -127,10 +247,12 @@
 .display-xl {
   font-size: clamp(2.75rem, 1.5rem + 4.6vw, 5rem);
   line-height: 1.04;
+  font-weight: 400;
 }
 .display-lg {
   font-size: clamp(2.1rem, 1.4rem + 2.4vw, 3.25rem);
   line-height: 1.08;
+  font-weight: 400;
 }
 
 .hairline {
@@ -194,6 +316,42 @@
    No hidden default: GSAP in BaseLayout applies the initial state only when
    motion is allowed, so failed scripts never hide content. The `.reveal` class
    on markup is the ScrollTrigger marker. */
+
+/* ---------- The ledger signature ----------
+   The site's one authored moment: ruled lists fill in row by row, in strict
+   document order. A gold rule rides the leading edge of each row and the whole
+   ledger settles to its neutral hairline once the last line lands. GSAP applies
+   the clip and the `--ruling` / `--settled` classes; with JS off, or motion
+   reduced, nothing here hides or paints. Clip only, never a transform — a row
+   keeps its exact hit target while it arrives. */
+.ledger > * {
+  position: relative;
+}
+
+.ledger > *::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px; /* sits on the row's own 1px border, inside the clip box */
+  height: 1px;
+  background: var(--color-gold);
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.ledger--top > *::after {
+  bottom: auto;
+  top: -1px;
+}
+
+.ledger--ruling > *::after {
+  opacity: 1;
+}
+
+.ledger--settled > *::after {
+  opacity: 0;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {

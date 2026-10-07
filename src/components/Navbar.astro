@@ -13,25 +13,30 @@ const isActive = (href: string) =>
 
 <header id="site-nav" class="nav fixed inset-x-0 top-0 z-50">
   <div class="nav-scrim absolute inset-0 pointer-events-none" aria-hidden="true"></div>
-  <div class="wrap relative flex items-center justify-between py-4">
-    <a href="/" class="flex items-center text-white" aria-label={`${site.name} — home`}>
+  <div class="wrap relative flex items-center justify-end gap-6 py-4 lg:justify-between">
+    <!-- Centered on the viewport below the desktop breakpoint, where it is the
+         first flex item again. Absolute so the hamburger never shifts it off axis. -->
+    <a
+      href="/"
+      class="absolute inset-y-0 left-1/2 flex -translate-x-1/2 items-center text-white lg:static lg:translate-x-0"
+      aria-label={`${site.name} — home`}>
       <img
         src="/images/logo.png"
         alt=""
         width="366"
         height="89"
-        class="h-12 md:h-16 w-auto"
+        class="h-14 md:h-16 w-auto"
       />
     </a>
 
-    <nav class="hidden lg:flex items-center gap-7" aria-label="Main">
+    <nav class="hidden lg:flex flex-1 items-center justify-center gap-x-6 xl:gap-x-10" aria-label="Main">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
             aria-current={isActive(link.href) ? "page" : undefined}
             class:list={[
-              "text-[0.95rem] font-medium transition-colors",
+              "text-[0.78rem] font-medium uppercase tracking-[0.16em] whitespace-nowrap transition-colors",
               isActive(link.href) ? "text-gold" : "text-white/85 hover:text-white",
             ]}
           >
@@ -39,21 +44,28 @@ const isActive = (href: string) =>
           </a>
         ))
       }
-      <a href="/contact" class="btn btn-gold !py-2.5 !px-6 text-[0.95rem]">Inquire now</a>
     </nav>
 
-    <button
-      id="menu-toggle"
-      class="lg:hidden text-white p-2 -mr-2"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-      aria-label="Toggle menu"
-    >
-      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-        <path class="icon-open" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
-        <path class="icon-close hidden" stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
-      </svg>
-    </button>
+    <div class="flex items-center gap-1">
+      <!-- The hide lives on a wrapper, not the button: `.btn` sets `display:
+           inline-flex` outside any layer, so it outranks Tailwind's `hidden`. -->
+      <div class="hidden lg:block">
+        <a href="/contact" class="btn btn-gold !py-2.5 !px-6 text-[0.95rem]">Inquire now</a>
+      </div>
+
+      <button
+        id="menu-toggle"
+        class="lg:hidden text-white p-2 -mr-2"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Toggle menu"
+      >
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+          <path class="icon-open" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+          <path class="icon-close hidden" stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
   </div>
 
   <div id="mobile-menu" class="lg:hidden hidden bg-wine-deep/98 backdrop-blur border-t border-white/10">

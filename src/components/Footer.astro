@@ -8,13 +8,13 @@ const year = new Date().getFullYear();
 <footer class="bg-wine-deep text-white/70">
   <div class="wrap py-16 md:py-20">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
-      <div class="md:col-span-4">
+      <div class="md:col-span-3">
         <img
           src="/images/logo.png"
           alt="Makeup Academy Manila"
           width="366"
           height="89"
-          class="h-12 md:h-16 w-auto"
+          class="h-12 md:h-14 w-auto"
         />
         <p class="mt-4 text-sm leading-relaxed max-w-xs">
           Professional face-to-face makeup training in Quezon City for students
@@ -41,9 +41,9 @@ const year = new Date().getFullYear();
         </ul>
       </nav>
 
-      <nav class="md:col-span-4" aria-label="Classes">
+      <nav class="md:col-span-3" aria-label="Classes">
         <p class="eyebrow text-white/70 mb-5">Classes</p>
-        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
+        <ul class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
           {
             courses.map((c) => (
               <li>
@@ -56,7 +56,7 @@ const year = new Date().getFullYear();
         </ul>
       </nav>
 
-      <div class="md:col-span-2">
+      <div class="md:col-span-4">
         <p class="eyebrow text-white/70 mb-5">Contact</p>
         <address class="not-italic text-sm space-y-3 leading-relaxed">
           <p>{site.addressFull}</p>
@@ -64,7 +64,7 @@ const year = new Date().getFullYear();
             <a href={`tel:${site.phoneHref}`} class="hover:text-gold transition-colors">{site.phone}</a>
           </p>
           <p>
-            <a href={`mailto:${site.email}`} class="hover:text-gold transition-colors break-all">{site.email}</a>
+            <a href={`mailto:${site.email}`} class="hover:text-gold transition-colors break-words">{site.email}</a>
           </p>
         </address>
       </div>

@@ -1,12 +1,12 @@
 ---
 interface Props {
-  eyebrow: string;
   title: string;
   intro?: string;
   image?: string;
+  imageFocus?: string;
 }
 
-const { eyebrow, title, intro, image } = Astro.props;
+const { title, intro, image, imageFocus } = Astro.props;
 ---
 
 <section class="bg-wine text-white relative overflow-hidden">
@@ -15,22 +15,23 @@ const { eyebrow, title, intro, image } = Astro.props;
       <img
         src={image}
         alt=""
-        class="absolute inset-0 w-full h-full object-cover opacity-25"
-        loading="eager"
         aria-hidden="true"
+        class="absolute inset-0 w-full h-full object-cover opacity-90"
+        style={imageFocus ? `object-position: ${imageFocus}` : undefined}
+        loading="eager"
       />
     )
   }
-  <div class="absolute inset-0 bg-gradient-to-r from-wine via-wine/80 to-wine/40" aria-hidden="true"></div>
-  <div class="wrap relative pt-40 pb-20 md:pt-52 md:pb-28">
-    <p class="eyebrow text-gold mb-5">{eyebrow}</p>
+  <div class="absolute inset-0 bg-wine/80 md:bg-gradient-to-r md:from-wine/95 md:via-wine/80 md:to-wine/35" aria-hidden="true"></div>
+  <div class="wrap relative pt-36 pb-16 md:pt-48 md:pb-24">
     <h1 class="display-lg text-white max-w-3xl text-balance">{title}</h1>
     {
       intro && (
-        <p class="mt-6 max-w-2xl text-white/75 text-lg leading-relaxed">
+        <p class="mt-6 max-w-2xl text-white/80 text-lg leading-relaxed">
           {intro}
         </p>
       )
     }
+    <slot name="cta" />
   </div>
 </section>

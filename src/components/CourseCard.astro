@@ -12,13 +12,14 @@ const { course, eager = false } = Astro.props;
 
 <a
   href={`/classes/${course.slug}`}
-  class="group reveal block rounded-card overflow-hidden bg-cream border border-line/60 hover:border-gold-ink transition-colors"
+  class="group reveal block rounded-card overflow-hidden bg-cream border border-line/60 transition-[border-color,box-shadow] duration-300 hover:border-gold-ink hover:shadow-[0_18px_44px_-26px_rgb(34_0_22/0.5)]"
 >
   <div class="relative overflow-hidden">
     <img
       src={course.image}
       alt={course.imageAlt}
-      class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+      class="w-full aspect-[4/3] object-cover"
+      style={course.imageFocus ? `object-position: ${course.imageFocus}` : undefined}
       loading={eager ? "eager" : "lazy"}
       width="800"
       height="600"
@@ -27,12 +28,14 @@ const { course, eager = false } = Astro.props;
       {course.discipline}
     </span>
   </div>
-  <div class="p-6 md:p-7">
-    <div class="flex items-baseline justify-between gap-4">
-      <h3 class="font-display text-2xl leading-tight group-hover:text-wine-soft transition-colors">
+  <div class="@container p-6 md:p-7">
+    <div class="flex flex-col gap-x-4 @min-[25rem]:flex-row @min-[25rem]:items-baseline @min-[25rem]:justify-between">
+      {/* Stacked cards sit in a grid row, so the title reserves two lines:
+          without it a one-word wrap pushes that card's price out of line with its neighbours. */}
+      <h3 class="font-display text-2xl leading-[1.35] min-h-[2lh] @min-[25rem]:min-h-0 group-hover:text-wine-soft transition-colors">
         {course.shortName}
       </h3>
-      <p class="font-display text-xl text-gold-ink whitespace-nowrap">{formatTuition(course.tuition)}</p>
+      <p class="font-display text-xl text-gold-ink whitespace-nowrap mt-1 @min-[25rem]:mt-0">{formatTuition(course.tuition)}</p>
     </div>
     <p class="mt-3 text-sm text-muted leading-relaxed line-clamp-3">{course.intro}</p>
     <div class="mt-5 pt-4 border-t border-line flex items-center justify-between text-xs text-muted">

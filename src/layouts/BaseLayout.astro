@@ -32,7 +32,7 @@ const ogUrl = new URL(ogImage, Astro.site);
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link
       rel="preload"
-      href="/fonts/DMSerifText-Regular.woff2"
+      href="/fonts/Boska-Regular.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -126,8 +126,11 @@ const ogUrl = new URL(ogImage, Astro.site);
           });
         }
 
-        /* Supporting reveals: lists/figures that exist as lists. */
-        const reveals = gsap.utils.toArray<HTMLElement>(".reveal");
+        /* Supporting reveals: lists/figures that exist as lists. Rows inside a
+           `.ledger` are handled by the signature below instead. */
+        const reveals = gsap.utils
+          .toArray<HTMLElement>(".reveal")
+          .filter((el) => !el.closest(".ledger"));
         if (reveals.length) {
           gsap.set(reveals, { opacity: 0, y: 24 });
           ScrollTrigger.batch(reveals, {
@@ -142,6 +145,47 @@ const ogUrl = new URL(ogImage, Astro.site);
                 ease: "power3.out",
                 clearProps: "opacity,transform",
               }),
+          });
+        }
+
+        /* Signature: ledgers rule themselves in, one line at a time. Each row's
+           clip releases left to right on a fixed beat, so the sequence reads as
+           written rather than faded; the gold hairline holds until the final row
+           lands and the ledger settles. */
+        for (const list of gsap.utils.toArray<HTMLElement>(".ledger")) {
+          const rows = Array.from(list.children).filter(
+            (child): child is HTMLElement =>
+              child instanceof HTMLElement && child.tagName !== "TEMPLATE",
+          );
+          if (rows.length < 2) continue;
+
+          gsap.set(rows, { clipPath: "inset(0px 100% 0px 0px)" });
+          ScrollTrigger.create({
+            trigger: list,
+            start: "top 85%",
+            once: true,
+            onEnter: () => {
+              list.classList.add("ledger--ruling");
+              const beat = 0.085;
+              const line = gsap.timeline();
+              rows.forEach((row, i) => {
+                line.to(
+                  row,
+                  {
+                    clipPath: "inset(0px 0% 0px 0px)",
+                    duration: 0.52,
+                    ease: "power2.inOut",
+                    clearProps: "clipPath",
+                  },
+                  i * beat,
+                );
+              });
+              line.call(
+                () => list.classList.add("ledger--settled"),
+                undefined,
+                (rows.length - 1) * beat + 0.62,
+              );
+            },
           });
         }
       }

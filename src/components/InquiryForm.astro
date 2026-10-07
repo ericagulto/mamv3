@@ -60,11 +60,9 @@ import { courses } from "../data/courses";
 
   <button type="submit" class="btn btn-primary w-full sm:w-auto">Submit inquiry</button>
 
-  <p id="form-success" class="hidden bg-wine text-white text-sm px-5 py-4">
+  <p id="form-success" role="status" class="hidden rounded-field bg-wine text-white text-sm leading-relaxed px-5 py-4">
     Thank you! Your inquiry has been submitted. We will reply within one business day.
-  </p>
-  <p id="form-error" class="hidden text-sm text-[#A3263A] px-5 py-4 bg-[#A3263A]/8">
-    Something went wrong. Please try again or call us at 0917 873 9894.
+    <a href="/thank-you" class="text-gold underline">Here is what happens next</a>.
   </p>
 </form>
 
@@ -73,14 +71,18 @@ import { courses } from "../data/courses";
     width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid var(--color-line-strong);
-    background: #fff;
+    background: var(--color-cream);
     font: inherit;
     color: var(--color-body);
-    border-radius: 0;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    border-radius: var(--radius-field);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+  .input:hover {
+    border-color: var(--color-wine);
   }
   .input:focus {
     outline: none;
+    background: var(--color-paper);
     border-color: var(--color-wine);
     box-shadow: 0 0 0 3px rgb(198 161 91 / 0.25);
   }
@@ -92,7 +94,6 @@ import { courses } from "../data/courses";
 <script>
   const form = document.getElementById("inquiry-form") as HTMLFormElement | null;
   const success = document.getElementById("form-success");
-  const error = document.getElementById("form-error");
 
   form?.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -100,7 +101,7 @@ import { courses } from "../data/courses";
 
     // Front-end demo — wire to a real endpoint (email service / backend) at launch.
     success?.classList.remove("hidden");
-    error?.classList.add("hidden");
+    success?.scrollIntoView({ block: "center" });
     form.reset();
   });
 </script>

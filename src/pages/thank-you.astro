@@ -1,6 +1,21 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../data/site";
+
+const nextSteps = [
+  {
+    t: "We read your inquiry",
+    d: "Admissions checks which program you asked about and what is open on the calendar.",
+  },
+  {
+    t: "You get a reply within one business day",
+    d: "Dates, what to bring, and an honest read on whether the class fits where you are now.",
+  },
+  {
+    t: "Then you decide",
+    d: "Visit the studio, meet an instructor, and hold your seat. Classes run Monday to Saturday.",
+  },
+];
 ---
 
 <BaseLayout
@@ -8,25 +23,39 @@ import { site } from "../data/site";
   description="We have received your inquiry. The Makeup Academy Manila team will reply within one business day."
 >
   <section class="bg-wine text-white">
-    <div class="wrap pt-40 pb-20 md:pt-52 md:pb-28 text-center">
-      <p class="text-gold tracking-[0.35em] text-2xl" aria-hidden="true">★★★★★</p>
-      <h1 class="display-lg text-white mt-6 text-balance">Thank You. We Have Your Inquiry.</h1>
-      <p class="mt-6 max-w-xl mx-auto text-white/80 text-lg leading-relaxed">
-        Our admissions team will contact you with schedules, requirements, and
-        the next steps for enrollment.
+    <div class="wrap pt-40 pb-20 md:pt-52 md:pb-28">
+      <h1 class="display-lg text-white max-w-3xl text-balance">Thank You. We Have Your Inquiry.</h1>
+      <p class="mt-6 max-w-xl text-white/80 text-lg leading-relaxed">
+        Our admissions team will contact you with schedules, requirements, and the next steps for
+        enrollment.
       </p>
     </div>
   </section>
 
-  <section class="py-20 md:py-24 text-center">
-    <div class="wrap max-w-xl">
-      <p class="text-muted leading-relaxed">
-        Need a faster answer? Call us directly at
+  <section class="py-20 md:py-24">
+    <div class="wrap max-w-3xl">
+      <ol class="border-t border-line">
+        {
+          nextSteps.map((s) => (
+            <li class="py-6 border-b border-line grid grid-cols-[auto_1fr] gap-x-5">
+              <span class="mt-[0.85rem] w-6 h-px bg-gold-ink" aria-hidden="true"></span>
+              <div>
+                <h2 class="font-display text-xl leading-snug">{s.t}</h2>
+                <p class="mt-2 text-sm text-muted leading-relaxed">{s.d}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="mt-10 text-muted leading-relaxed">
+        Need a faster answer? Call
         <a href={`tel:${site.phoneHref}`} class="text-wine font-medium hover:text-gold-ink transition-colors">{site.phone}</a>
         or email
-        <a href={`mailto:${site.email}`} class="text-wine font-medium hover:text-gold-ink transition-colors break-all">{site.email}</a>.
+        <a href={`mailto:${site.email}`} class="text-wine font-medium hover:text-gold-ink transition-colors break-words">{site.email}</a>.
       </p>
-      <a href="/classes" class="btn btn-primary mt-10">Keep exploring courses <span aria-hidden="true">→</span></a>
+      <a href="/classes" class="btn btn-primary mt-10">
+        Keep exploring courses <span aria-hidden="true">→</span>
+      </a>
     </div>
   </section>
 </BaseLayout>

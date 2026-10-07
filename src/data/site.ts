@@ -19,11 +19,6 @@ export const site = {
   },
   addressFull:
     "19 Francisca Tirona Benitez Street, Tierra Verde Homes 2, Barangay Pasong Tamo, Quezon City, Metro Manila, Philippines 1107",
-  stats: [
-    { value: "27+", label: "Years of industry experience" },
-    { value: "500+", label: "Graduates trained" },
-    { value: "11", label: "Courses" },
-  ],
 } as const;
 
 export const navLinks = [
