@@ -1,0 +1,150 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../data/site";
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { title, description = site.description, ogImage = "/images/hero.jpg" } =
+  Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogUrl = new URL(ogImage, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233B001A'/%3E%3Ctext x='32' y='46' font-family='Georgia, serif' font-weight='700' font-size='38' fill='%23C6A15B' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="preload"
+      href="/fonts/DMSerifText-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Satoshi-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      name: site.name,
+      description: site.description,
+      url: site.url,
+      telephone: site.phoneHref,
+      email: site.email,
+      founder: { "@type": "Person", name: site.founder },
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: site.address.street,
+        addressLocality: site.address.city,
+        addressRegion: site.address.region,
+        postalCode: site.address.postalCode,
+        addressCountry: "PH",
+      },
+    })} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-100 focus:bg-wine focus:text-white focus:px-4 focus:py-2 focus:rounded-full"
+    >
+      Skip to content
+    </a>
+    <Navbar currentPath={Astro.url.pathname} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      import gsap from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const navbar = document.getElementById("site-nav");
+      const onScroll = () => {
+        navbar?.classList.toggle("nav-scrolled", window.scrollY > 40);
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      const reduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (!reduced) {
+        /* Focal moment: hero entrance — image settles, then eyebrow → headline
+           → lede → CTAs → stats in one rehearsed sequence. */
+        const hero = document.querySelector("main > section:first-child");
+        if (hero?.querySelector("h1")) {
+          const img = hero.querySelector(":scope > img");
+          if (img) {
+            gsap.from(img, { scale: 1.08, duration: 1.6, ease: "power2.out" });
+          }
+          gsap.from(hero.querySelectorAll(".eyebrow, h1, p, .btn, dl"), {
+            opacity: 0,
+            y: 28,
+            duration: 0.7,
+            stagger: { each: 0.1, amount: 0.6 },
+            ease: "power3.out",
+            delay: 0.15,
+            clearProps: "opacity,transform",
+          });
+        }
+
+        /* Supporting reveals: lists/figures that exist as lists. */
+        const reveals = gsap.utils.toArray<HTMLElement>(".reveal");
+        if (reveals.length) {
+          gsap.set(reveals, { opacity: 0, y: 24 });
+          ScrollTrigger.batch(reveals, {
+            start: "top 88%",
+            once: true,
+            onEnter: (batch) =>
+              gsap.to(batch, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.08,
+                ease: "power3.out",
+                clearProps: "opacity,transform",
+              }),
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+---
+import { site, navLinks } from "../data/site";
+import { courses } from "../data/courses";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-wine-deep text-white/70">
+  <div class="wrap py-16 md:py-20">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
+      <div class="md:col-span-4">
+        <img
+          src="/images/logo.png"
+          alt="Makeup Academy Manila"
+          width="366"
+          height="89"
+          class="h-12 md:h-16 w-auto"
+        />
+        <p class="mt-4 text-sm leading-relaxed max-w-xs">
+          Professional face-to-face makeup training in Quezon City for students
+          building real technique, confidence, and professional skill.
+        </p>
+        <p class="mt-6 text-sm">
+          <span class="text-white/70">Founder</span>
+          <span class="block text-white text-lg font-display mt-1">{site.founder}</span>
+        </p>
+      </div>
+
+      <nav class="md:col-span-2" aria-label="Explore">
+        <p class="eyebrow text-white/70 mb-5">Explore</p>
+        <ul class="space-y-2.5 text-sm">
+          {
+            navLinks.map((l) => (
+              <li>
+                <a href={l.href} class="hover:text-gold transition-colors">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav class="md:col-span-4" aria-label="Classes">
+        <p class="eyebrow text-white/70 mb-5">Classes</p>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
+          {
+            courses.map((c) => (
+              <li>
+                <a href={`/classes/${c.slug}`} class="hover:text-gold transition-colors">
+                  {c.shortName}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="md:col-span-2">
+        <p class="eyebrow text-white/70 mb-5">Contact</p>
+        <address class="not-italic text-sm space-y-3 leading-relaxed">
+          <p>{site.addressFull}</p>
+          <p>
+            <a href={`tel:${site.phoneHref}`} class="hover:text-gold transition-colors">{site.phone}</a>
+          </p>
+          <p>
+            <a href={`mailto:${site.email}`} class="hover:text-gold transition-colors break-all">{site.email}</a>
+          </p>
+        </address>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="wrap py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <p class="flex gap-5">
+        <a href="/privacy-policy" class="hover:text-gold transition-colors">Privacy Policy</a>
+        <a href="/website-terms-disclaimer" class="hover:text-gold transition-colors">Website Terms &amp; Disclaimer</a>
+      </p>
+    </div>
+  </div>
+</footer>

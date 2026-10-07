@@ -1,0 +1,203 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import InquiryForm from "../components/InquiryForm.astro";
+import { site } from "../data/site";
+import { courses, formatTuition } from "../data/courses";
+
+const steps = [
+  {
+    n: "01",
+    t: "Tell us where you are",
+    d: "Skill level, which program caught your eye, and when you want to start.",
+  },
+  {
+    n: "02",
+    t: "We reply with real options",
+    d: "Next intake dates, what to bring, and an honest read on fit. Within one business day.",
+  },
+  {
+    n: "03",
+    t: "Visit or reserve your seat",
+    d: "Tour the studio, meet an instructor, then hold your place. Classes run Monday to Saturday.",
+  },
+];
+
+const channels = [
+  {
+    label: "Phone",
+    value: site.phone,
+    href: `tel:${site.phoneHref}`,
+    note: "Quickest for schedule questions",
+  },
+  {
+    label: "Email",
+    value: site.email,
+    href: `mailto:${site.email}`,
+    note: "For portfolios, partnerships, and paperwork",
+  },
+  {
+    label: "Studio",
+    value: "Quezon City",
+    href: "#studio",
+    note: "Drop by to see the space",
+  },
+];
+
+const featured = courses.filter((c) =>
+  [
+    "basic-fundamentals-of-makeup-technical-applications",
+    "bridal-masterclass",
+    "personal-makeup-class",
+  ].includes(c.slug),
+);
+---
+
+<BaseLayout
+  title="Contact & Enrollment | Makeup Academy Manila"
+  description="Inquire about makeup and hairstyling classes at Makeup Academy Manila, Quezon City. Phone, email, address, and inquiry form."
+>
+  <PageHero
+    eyebrow="Admissions"
+    title="Start With a Conversation"
+    intro="Ask about classes, schedules, and enrollment, or visit the Quezon City studio. Every inquiry gets a reply within one business day."
+    image="/images/advisor.jpg"
+  />
+
+  <!-- Channels strip -->
+  <section class="bg-cream border-b border-line/70">
+    <div class="wrap grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-line">
+      {
+        channels.map((c) => (
+          <a
+            href={c.href}
+            class="group reveal py-8 md:px-8 md:first:pl-0 md:last:pr-0 flex flex-col gap-1 hover:bg-paper transition-colors"
+          >
+            <span class="eyebrow text-muted">{c.label}</span>
+            <span class="font-display text-2xl md:text-[1.65rem] text-wine group-hover:text-wine-soft transition-colors break-words">
+              {c.value}
+            </span>
+            <span class="text-sm text-muted">{c.note}</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Form + process -->
+  <section class="py-20 md:py-28">
+    <div class="wrap grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+      <div class="lg:col-span-7">
+        <p class="eyebrow text-muted mb-4">Inquiry form</p>
+        <h2 class="display-lg text-balance mb-8">Send an Inquiry</h2>
+        <div class="border-t-2 border-gold pt-8">
+          <InquiryForm />
+        </div>
+      </div>
+
+      <div class="lg:col-span-5">
+        <p class="eyebrow text-muted mb-4">What happens next</p>
+        <h2 class="font-display text-3xl text-balance mb-8">Three Steps to Your Seat</h2>
+        <ol class="border-t border-line">
+          {
+            steps.map((s) => (
+              <li class="reveal grid grid-cols-[auto_1fr] gap-x-5 py-6 border-b border-line">
+                <span class="font-display text-gold-ink text-lg">{s.n}</span>
+                <div>
+                  <h3 class="font-display text-xl leading-snug">{s.t}</h3>
+                  <p class="mt-2 text-sm text-muted leading-relaxed">{s.d}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="reveal mt-10 rounded-card bg-wine text-white p-7 md:p-8">
+          <p class="eyebrow text-gold mb-4">Studio</p>
+          <address class="not-italic text-white/85 leading-relaxed text-sm">
+            {site.addressFull}
+          </address>
+          <p class="mt-4 text-sm text-white/70">Founder & lead instructor</p>
+          <p class="font-display text-xl mt-1">{site.founder}</p>
+          <p class="mt-5 text-xs text-white/55 leading-relaxed">
+            Classes run face to face, Monday to Saturday. Intake dates open as seats fill.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Studio band -->
+  <section id="studio" class="bg-wine-ink text-white py-20 md:py-24 scroll-mt-20">
+    <div class="wrap grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <img
+        src="/images/studio-wide.jpg"
+        alt="Makeup Academy Manila studio interior in Quezon City"
+        class="reveal rounded-card w-full aspect-[4/3] object-cover"
+        loading="lazy"
+        width="1280"
+        height="960"
+      />
+      <div class="reveal">
+        <p class="eyebrow text-gold mb-4">Visit the studio</p>
+        <h2 class="font-display text-3xl md:text-4xl text-white text-balance">
+          See the Room Before You Commit
+        </h2>
+        <p class="mt-5 text-white/75 leading-relaxed max-w-lg">
+          Small classes, professional kits, and live models. Drop by to watch a session in progress,
+          or ask admissions for a walkthrough between classes.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-4">
+          <a href={`tel:${site.phoneHref}`} class="btn btn-gold">Call {site.phone}</a>
+          <a href="/classes" class="btn btn-outline-light">Browse classes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured paths -->
+  <section class="bg-cream border-b border-line/70 py-20 md:py-24">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+        <div>
+          <p class="eyebrow text-muted mb-3">Not sure where to start?</p>
+          <h2 class="font-display text-3xl text-balance">Most People Begin Here</h2>
+        </div>
+        <a
+          href="/classes"
+          class="text-sm text-wine font-medium hover:text-gold-ink transition-colors"
+        >
+          All {courses.length} classes <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <div class="border-t border-line">
+        {
+          featured.map((c) => (
+            <a
+              href={`/classes/${c.slug}`}
+              class="group reveal grid grid-cols-1 sm:grid-cols-[1fr_auto] md:grid-cols-[1fr_140px_auto] items-baseline gap-x-8 gap-y-2 py-6 border-b border-line hover:bg-paper transition-colors px-2"
+            >
+              <span>
+                <span class="font-display text-2xl group-hover:text-wine-soft transition-colors">
+                  {c.shortName}
+                </span>
+                <span class="block mt-1.5 text-sm text-muted max-w-xl leading-relaxed">
+                  {c.intro}
+                </span>
+              </span>
+              <span class="hidden md:block text-sm text-muted">
+                {c.level}
+                <span class="block mt-1 text-xs">
+                  {c.days} {c.days === 1 ? "day" : "days"}
+                </span>
+              </span>
+              <span class="font-display text-2xl whitespace-nowrap">
+                {formatTuition(c.tuition)}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

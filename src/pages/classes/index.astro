@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CourseCard from "../../components/CourseCard.astro";
+import InquiryCTA from "../../components/InquiryCTA.astro";
+import { courses, formatTuition } from "../../data/courses";
+---
+
+<BaseLayout
+  title="All Makeup & Hairstyling Classes in Quezon City | Makeup Academy Manila"
+  description="11 face-to-face makeup and hairstyling programs at the Quezon City studio — from a 1-day personal class to a 10-day prosthetics course, with materials, certificate, portfolio images and OJT included."
+  ogImage="/images/class-hands-on.jpg"
+>
+  <PageHero
+    eyebrow="Makeup Academy Manila · Quezon City"
+    title="Classes & Courses"
+    intro="From a one-day personal class to a ten-day prosthetics intensive: hands-on, materials included, with a certificate, portfolio images, and OJT opportunities."
+    image="/images/class-hands-on.jpg"
+  />
+
+  <section class="py-20 md:py-24">
+    <div class="wrap">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {courses.map((c, i) => <CourseCard course={c} eager={i < 3} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream border-y border-line/70 py-20 md:py-24">
+    <div class="wrap grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-4 reveal">
+        <h2 class="font-display text-3xl text-balance">How Enrollment Works</h2>
+        <p class="mt-5 text-muted leading-relaxed">
+          Class sizes stay small so every student gets direct instructor time.
+          Seats fill early; inquire as soon as you know your dates.
+        </p>
+        <p class="mt-4 text-muted leading-relaxed">
+          All classes run face to face at the Quezon City studio, Monday to
+          Saturday. Intake dates open as they are set, or contact us to hold
+          your seat.
+        </p>
+        <a href="/contact" class="btn btn-primary mt-8">Reserve Your Spot</a>
+      </div>
+
+      <div class="lg:col-span-8">
+        <h2 class="eyebrow text-muted mb-6">All Courses at a Glance</h2>
+        <div class="border-t border-line">
+          {
+            courses.map((c) => (
+              <a
+                href={`/classes/${c.slug}`}
+                class="group reveal grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_110px_130px_auto] items-baseline gap-x-6 py-5 border-b border-line hover:bg-paper transition-colors px-2"
+              >
+                <span class="font-display text-xl md:text-2xl group-hover:text-wine-soft transition-colors">
+                  {c.shortName}
+                </span>
+                <span class="hidden sm:block text-sm text-muted">{c.level}</span>
+                <span class="text-sm text-muted md:text-right whitespace-nowrap">
+                  {c.days} {c.days === 1 ? "day" : "days"}
+                </span>
+                <span class="font-display text-xl md:text-2xl text-right whitespace-nowrap">
+                  {formatTuition(c.tuition)}
+                </span>
+              </a>
+            ))
+          }
+        </div>
+        <p class="text-xs text-muted mt-6 px-2">
+          Tuition includes all training materials. Succeeding courses receive a 10% discount.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 md:py-24 text-center">
+    <div class="wrap max-w-2xl reveal">
+      <p class="eyebrow text-muted mb-4">Programs & tuition</p>
+      <h2 class="display-lg text-balance">Eleven Programs. One Studio Standard.</h2>
+      <p class="mt-5 text-muted leading-relaxed">
+        Foundations assume no experience. Intermediate classes add specialty
+        technique. Professional tracks carry OJT on real bookings. Every tuition
+        covers materials, your certificate, portfolio images, and a class small
+        enough for direct instructor correction — tell us where you are and we
+        will place you honestly.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/contact" class="btn btn-primary">Talk to Us</a>
+        <a href="#main" class="btn btn-outline">Browse All Courses</a>
+      </div>
+    </div>
+  </section>
+
+  <InquiryCTA />
+</BaseLayout>

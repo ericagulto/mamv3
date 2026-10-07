@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
+import { testimonials } from "../data/testimonials";
+---
+
+<BaseLayout
+  title="Student Stories & Results | Makeup Academy Manila"
+  description="What MAM students say about the training, the OJT, and the work they are doing now."
+>
+  <PageHero
+    eyebrow="Student stories"
+    title="Skills Built Through Practice"
+    intro="Results here are measured by what students can do, not by what the school claims. The words below are real and shared with permission."
+    image="/images/class-hands-on.jpg"
+  />
+
+  <section class="bg-cream border-b border-line/70 py-20 md:py-28">
+    <div class="wrap grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <aside class="lg:col-span-4">
+        <div class="lg:sticky lg:top-28 rounded-card bg-wine text-white p-8">
+          <p class="eyebrow text-gold mb-5">Our promise</p>
+          <p class="leading-relaxed text-white/85">
+            Direct mentorship. Honest feedback. Real repetition.
+            Everything in our curriculum is designed around one goal: helping you master the skill until it feels natural.
+          </p>
+        </div>
+      </aside>
+
+      <div class="lg:col-span-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {testimonials.map((t) => <TestimonialCard t={t} />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Student work gallery placeholder — real photos are being collected from recent cohorts -->
+  <section class="border-b border-line/70 py-20">
+    <div class="wrap max-w-2xl text-center reveal">
+      <p class="eyebrow text-muted mb-5">Student work gallery</p>
+      <h2 class="font-display text-3xl text-balance">Student Work Across Bridal, Editorial, SFX, and Airbrush.</h2>
+      <p class="mt-5 text-muted leading-relaxed">
+        Gallery photos are being collected from recent cohorts. A full student
+        work showcase is coming soon.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-20 md:py-24 text-center">
+    <div class="wrap max-w-2xl reveal">
+      <h2 class="display-lg text-balance">Your First Before-and-After Starts in Class.</h2>
+      <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/classes" class="btn btn-primary">Explore classes</a>
+        <a href="/contact" class="btn btn-outline">Discuss your goals</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

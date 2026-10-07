@@ -1,0 +1,26 @@
+{
+  "name": "makeup-academy-manila",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Makeup Academy Manila — face-to-face makeup & hairstyling training in Quezon City. Built on Astro 5 + Tailwind CSS v4.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.4.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^5.12.0",
+    "gsap": "^3.15.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

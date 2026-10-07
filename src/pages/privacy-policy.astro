@@ -1,0 +1,112 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { site } from "../data/site";
+
+const sections = [
+  ["who-we-are", "Who We Are"],
+  ["data-we-collect", "Data We Collect"],
+  ["how-we-use", "How We Use Your Data"],
+  ["retention", "Retention"],
+  ["processors", "Processors and Third Parties"],
+  ["your-rights", "Your Rights"],
+  ["contact", "Contact"],
+];
+---
+
+<BaseLayout
+  title="Privacy Policy | Makeup Academy Manila"
+  description="How Makeup Academy Manila collects, uses, and protects your personal data, and your rights under the Philippine Data Privacy Act."
+>
+  <PageHero eyebrow="Legal" title="Privacy Policy" intro="Last updated: August 24, 2026" />
+
+  <section class="bg-cream border-b border-line/70 py-16 md:py-24">
+    <div class="wrap grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <nav class="lg:col-span-3" aria-label="On this page">
+        <div class="lg:sticky lg:top-28">
+          <p class="eyebrow text-muted mb-4">On this page</p>
+          <ul class="space-y-2 text-sm">
+            {
+              sections.map(([id, label]) => (
+                <li>
+                  <a href={`#${id}`} class="text-muted hover:text-wine transition-colors">
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </nav>
+
+      <div class="lg:col-span-9 max-w-3xl space-y-12">
+        <section id="who-we-are">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Who We Are</h2>
+          <p class="text-muted leading-relaxed">
+            Makeup Academy Manila operates this website and the inquiry forms on
+            it. Our studio is located at {site.addressFull}.
+          </p>
+        </section>
+
+        <section id="data-we-collect">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Data We Collect</h2>
+          <p class="text-muted leading-relaxed">
+            When you send an inquiry through our forms, we collect the details
+            you provide: your name, mobile number, email address, course
+            interests, goals, experience level, preferred schedule, preferred
+            contact method, and any message you include. We do not collect
+            payment details through this website.
+          </p>
+        </section>
+
+        <section id="how-we-use">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">How We Use Your Data</h2>
+          <p class="text-muted leading-relaxed">
+            We use inquiry details for one purpose: responding to you about
+            courses, schedules, and enrollment. We do not sell your data, and
+            we do not send marketing messages without your separate consent.
+          </p>
+        </section>
+
+        <section id="retention">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Retention</h2>
+          <p class="text-muted leading-relaxed">
+            Inquiry records are kept only as long as needed to handle your
+            enrollment or question, after which they are removed unless you ask
+            us to stay in touch.
+          </p>
+        </section>
+
+        <section id="processors">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Processors and Third Parties</h2>
+          <p class="text-muted leading-relaxed">
+            This website is a static site with no analytics tracking,
+            advertising pixels, or third-party cookies. Form submissions are
+            delivered to the academy's admissions email and handled by our
+            team. If we add any tool that processes your data in the future, we
+            will update this section.
+          </p>
+        </section>
+
+        <section id="your-rights">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Your Rights</h2>
+          <p class="text-muted leading-relaxed">
+            You may ask us to access, correct, or delete the personal details
+            you sent us, and you may withdraw consent for further contact at
+            any time.
+          </p>
+        </section>
+
+        <section id="contact">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Contact</h2>
+          <p class="text-muted leading-relaxed">
+            For any privacy question or request, email{" "}
+            <a href={`mailto:${site.email}`} class="text-wine underline underline-offset-2 hover:text-gold-ink transition-colors">{site.email}</a>
+            {" "}or call{" "}
+            <a href={`tel:${site.phoneHref}`} class="text-wine underline underline-offset-2 hover:text-gold-ink transition-colors">{site.phone}</a>.
+          </p>
+        </section>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

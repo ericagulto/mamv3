@@ -1,0 +1,23 @@
+---
+interface Props {
+  title?: string;
+  body?: string;
+}
+
+const {
+  title = "Ready to Start Your Training?",
+  body = "Tell us which course interests you. We will send the next available dates and everything you need to get started.",
+} = Astro.props;
+---
+
+<section class="bg-wine text-white">
+  <div class="wrap reveal py-20 md:py-28 text-center">
+    <p class="eyebrow text-gold mb-5">Enrollment now open</p>
+    <h2 class="display-lg text-white max-w-3xl mx-auto text-balance">{title}</h2>
+    <p class="mt-6 max-w-xl mx-auto text-white/75 leading-relaxed">{body}</p>
+    <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="/contact" class="btn btn-gold">Send an inquiry</a>
+      <a href="tel:+639178739894" class="btn btn-outline-light">Call 0917 873 9894</a>
+    </div>
+  </div>
+</section>

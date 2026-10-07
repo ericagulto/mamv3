@@ -1,0 +1,229 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
+import InquiryCTA from "../components/InquiryCTA.astro";
+import { site } from "../data/site";
+import { courses, getCourse, formatTuition } from "../data/courses";
+import { testimonials } from "../data/testimonials";
+
+// Editorial ledger of three signature programs — numbered rows, not cards
+const featuredSlugs = [
+  "basic-fundamentals-of-makeup-technical-applications",
+  "bridal-masterclass",
+  "special-effects-sfx-makeup-masterclass",
+];
+
+const featuredQuote = testimonials.find((t) => t.name === "Cheyenne Adamson")!;
+const supportingQuotes = [
+  testimonials.find((t) => t.name === "Maxene Lati")!,
+  testimonials.find((t) => t.name === "CLSHES Shes")!,
+];
+---
+
+<BaseLayout title="Professional Makeup & Hairstyling Training in Quezon City | Makeup Academy Manila">
+  <!-- 01 / HERO — full-bleed studio image, headline anchored low, stats strip -->
+  <section class="relative bg-wine-deep">
+    <img
+      src="/images/hero.jpg"
+      alt="Makeup Academy Manila students and instructors at a studio event"
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-wine-deep via-wine-deep/55 to-wine-deep/25" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-wine-deep/85 via-wine-deep/45 to-transparent" aria-hidden="true"></div>
+    <div class="wrap relative pt-44 pb-16 md:pt-60 md:pb-20">
+      <p class="eyebrow text-gold mb-6">Makeup & hairstyling school · Quezon City</p>
+      <h1 class="display-xl text-white max-w-4xl">
+        Professional Makeup & Hairstyling Training, Done Face to Face.
+      </h1>
+      <p class="mt-6 max-w-2xl text-white/80 text-lg leading-relaxed">
+        Hands-on makeup and hairstyling classes taught by working industry
+        artists. Guided practice on live models builds the technique you will
+        actually use on the job.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row gap-4">
+        <a href="/classes" class="btn btn-gold">Explore classes</a>
+        <a href="/contact" class="btn btn-outline-light">Contact us</a>
+      </div>
+    </div>
+    <div class="relative border-t border-white/15">
+      <dl class="wrap grid grid-cols-3 gap-6 py-8">
+        {
+          site.stats.map((s) => (
+            <div>
+              <dt class="sr-only">{s.label}</dt>
+              <dd class="font-display text-3xl md:text-5xl text-white leading-none">{s.value}</dd>
+              <dd class="mt-2 text-xs md:text-sm text-white/60">{s.label}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- 02 / MANIFESTO — pure typography, no boxes; the advantages live in the prose -->
+  <section class="py-24 md:py-36">
+    <div class="wrap">
+      <p class="eyebrow text-muted mb-8">Why face-to-face</p>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <h2 class="lg:col-span-8 reveal display-lg text-balance">
+          Makeup Is a Physical Craft. Brush Pressure, Blending Timing, and
+          Skin Reading Do Not Survive a Screen.
+        </h2>
+        <div class="lg:col-span-4 lg:pt-2 reveal">
+          <p class="text-muted leading-relaxed">
+            In the studio, instructors stand beside you: adjusting
+            your angle, correcting your blend, and fixing the habit while it
+            forms.
+          </p>
+          <p class="mt-5 text-muted leading-relaxed">
+            Every class puts you on live faces, with branded cosmetics,
+            professional tools, and lighting that matches a real client booking.
+          </p>
+          <a href="/about" class="inline-block mt-8 text-wine font-medium hover:text-gold-ink transition-colors">
+            How the academy works <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 / SIGNATURE PROGRAMS — numbered editorial ledger, not cards -->
+  <section class="bg-cream border-y border-line/70 pb-24 md:pb-36 pt-24 md:pt-36">
+    <div class="wrap">
+      <div class="flex items-end justify-between gap-6 mb-8">
+        <div>
+          <p class="eyebrow text-muted mb-4">Signature programs</p>
+          <h2 class="display-lg">Three Ways Artists Start with Us.</h2>
+        </div>
+        <a href="/classes" class="hidden sm:inline-block text-sm text-wine font-medium hover:text-gold-ink transition-colors whitespace-nowrap">
+          All {courses.length} classes <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <div class="border-t border-line">
+        {
+          featuredSlugs.map((slug, i) => {
+            const c = getCourse(slug)!;
+            return (
+              <a
+                href={`/classes/${slug}`}
+                class="group reveal grid grid-cols-[auto_1fr] md:grid-cols-[auto_1fr_170px_auto] items-baseline gap-x-6 md:gap-x-10 py-8 border-b border-line hover:bg-paper transition-colors px-1 md:px-3"
+              >
+                <span class="font-display text-gold-ink text-lg w-8">{String(i + 1).padStart(2, "0")}</span>
+                <span>
+                  <span class="font-display text-2xl md:text-3xl group-hover:text-wine-soft transition-colors text-balance">
+                    {c.shortName}
+                  </span>
+                  <span class="block mt-2 text-muted text-sm md:text-[1.05rem] max-w-2xl leading-relaxed">
+                    {c.intro}
+                  </span>
+                </span>
+                <span class="hidden md:block text-sm text-muted">
+                  {c.level}
+                  <span class="block mt-1 text-xs">{c.days} {c.days === 1 ? "day" : "days"} · hands-on</span>
+                </span>
+                <span class="text-right font-display text-2xl whitespace-nowrap">{formatTuition(c.tuition)}</span>
+              </a>
+            );
+          })
+        }
+      </div>
+      <a href="/classes" class="sm:hidden inline-block mt-8 text-sm text-wine font-medium">
+        All {courses.length} classes <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 04 / PROOF OF INDUSTRY — dark band: where the academy's work actually happens -->
+  <section class="bg-wine-ink text-white py-24 md:py-32">
+    <div class="wrap">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-14">
+        <p class="lg:col-span-2 eyebrow text-white/70">Beyond the studio</p>
+        <h2 class="lg:col-span-8 font-display text-white text-3xl md:text-4xl leading-snug text-balance">
+          Graduates Step onto Stages, Film Sets, and Bridal Fair Floors.
+        </h2>
+      </div>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-14 gap-y-0">
+        {
+          [
+            ["Newport Performing Arts Theater", "Official makeup team — Bongga Ka, ’Day!: The Annie Batungbakal Musical"],
+            ["7th Global Trends", "Notable Academy for Make Up Artistry"],
+            ["Philippine Bridal Fairs", "Leading participation, showcasing the Makeup Academy Manila Bride aesthetic"],
+            ["IROG Year 7", "Official judge, Bridal Hair & Makeup Competition"],
+          ].map(([org, title]) => (
+            <li class="reveal border-t border-white/15 py-6">
+              <p class="eyebrow text-gold mb-2">{org}</p>
+              <p class="text-white/80 leading-relaxed">{title}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <a href="/industry" class="inline-block mt-12 text-white font-medium hover:text-gold transition-colors">
+        See the full track record <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 05 / STUDIO — image left, checklist right -->
+  <section class="py-24 md:py-36">
+    <div class="wrap grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <img
+        src="/images/event-wide.jpg"
+        alt="Makeup Academy Manila students and instructors on stage at an industry event"
+        class="reveal rounded-card w-full aspect-[4/3] object-cover"
+        loading="lazy"
+        width="1280"
+        height="960"
+      />
+      <div class="reveal">
+        <p class="eyebrow text-muted mb-5">Inside the studio</p>
+        <h2 class="display-lg text-balance">A Studio Built for Focused Practice.</h2>
+        <ul class="mt-8 space-y-4">
+          {
+            [
+              "Branded cosmetics and professional tools in every class",
+              "Real models, not mannequins",
+              "Small class sizes for individual attention",
+              "Practice-based learning, not passive demos",
+            ].map((item) => (
+              <li class="flex gap-4 items-baseline border-t border-line pt-4">
+                <span class="text-gold-ink" aria-hidden="true">—</span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <a href="/contact" class="inline-block mt-8 text-wine font-medium hover:text-gold-ink transition-colors">
+          Visit the studio <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 / TESTIMONIALS — one large outcome quote, two supporting, asymmetric -->
+  <section class="bg-cream border-y border-line/70 py-24 md:py-32">
+    <div class="wrap">
+      <p class="eyebrow text-muted mb-10">What students say</p>
+      <figure class="reveal max-w-4xl">
+        <div class="text-gold-ink tracking-[0.3em] text-sm" aria-label="Five star review">★★★★★</div>
+        <blockquote class="mt-5 text-2xl md:text-[2rem] leading-[1.4] font-medium text-wine-ink">
+          “{featuredQuote.quote}”
+        </blockquote>
+        <figcaption class="mt-5 text-sm text-muted">
+          <span class="text-wine-ink font-medium">{featuredQuote.name}</span>
+          <span class="mx-2 text-muted" aria-hidden="true">·</span>
+          {featuredQuote.source}
+        </figcaption>
+      </figure>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14 max-w-4xl">
+        {supportingQuotes.map((t) => <TestimonialCard t={t} />)}
+      </div>
+      <a href="/student-stories" class="inline-block mt-12 text-wine font-medium hover:text-gold-ink transition-colors">
+        Read more student stories <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 07 / CTA -->
+  <InquiryCTA />
+</BaseLayout>

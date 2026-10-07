@@ -1,0 +1,120 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { site } from "../data/site";
+
+const sections = [
+  ["purpose", "Purpose of This Website"],
+  ["course-info", "Course Information"],
+  ["enrollment", "Enrollment, Payment, and Cancellation"],
+  ["results", "Results Disclaimer"],
+  ["ip", "Intellectual Property"],
+  ["liability", "Liability"],
+  ["contact", "Contact"],
+];
+---
+
+<BaseLayout
+  title="Website Terms & Disclaimer | Makeup Academy Manila"
+  description="Terms of use for the Makeup Academy Manila website, course information accuracy, enrollment terms, and results disclaimer."
+>
+  <PageHero eyebrow="Legal" title="Website Terms & Disclaimer" intro="Last updated: August 24, 2026" />
+
+  <section class="bg-cream border-b border-line/70 py-16 md:py-24">
+    <div class="wrap grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <nav class="lg:col-span-3" aria-label="On this page">
+        <div class="lg:sticky lg:top-28">
+          <p class="eyebrow text-muted mb-4">On this page</p>
+          <ul class="space-y-2 text-sm">
+            {
+              sections.map(([id, label]) => (
+                <li>
+                  <a href={`#${id}`} class="text-muted hover:text-wine transition-colors">
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </nav>
+
+      <div class="lg:col-span-9 max-w-3xl space-y-12">
+        <section id="purpose">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Purpose of This Website</h2>
+          <p class="text-muted leading-relaxed">
+            This website presents information about Makeup Academy Manila's
+            courses and accepts inquiries. It is not an enrollment contract,
+            and submitting an inquiry does not reserve a slot.
+          </p>
+        </section>
+
+        <section id="course-info">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Course Information</h2>
+          <p class="text-muted leading-relaxed">
+            Course names, durations, tuition, curricula, inclusions,
+            certificates, welcome gifts, succeeding-course discounts, portfolio
+            references, industry techniques, and on-the-job training notes
+            published here come from the academy's official 2026 course
+            posters. Where a poster does not include a detail, we do not
+            present one. Schedules are maintained by staff and shared through
+            direct inquiry.
+          </p>
+        </section>
+
+        <section id="enrollment">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Enrollment, Payment, and Cancellation</h2>
+          <p class="text-muted leading-relaxed">
+            Enrollment is completed directly with our admissions team. Payment
+            terms, reservation rules, and cancellation or refund conditions
+            will be published here once confirmed by operations. Until then,
+            ask us directly for the current policy before paying anything.
+          </p>
+        </section>
+
+        <section id="results">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Results Disclaimer</h2>
+          <p class="text-muted leading-relaxed">
+            Our courses teach skills through structured, face-to-face training.
+            We do not guarantee employment, income, bookings, or any specific
+            career outcome. Student work shown on this site is shared with
+            permission and reflects individual effort and practice.
+          </p>
+        </section>
+
+        <section id="ip">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Intellectual Property</h2>
+          <p class="text-muted leading-relaxed">
+            The Makeup Academy Manila name, logo, course materials, and website
+            content belong to the academy. Course outlines and posters may not
+            be reproduced without written permission. Student portfolios remain
+            the work of the students who created them.
+          </p>
+        </section>
+
+        <section id="liability">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Liability</h2>
+          <p class="text-muted leading-relaxed">
+            To the extent permitted by Philippine law, Makeup Academy Manila is
+            not liable for any indirect, incidental, or consequential damages
+            arising from your use of this website or reliance on its content.
+            Our total liability for any claim related to this website will not
+            exceed the amount you paid us, if anything. For in-person training,
+            separate enrollment terms apply once you register with our
+            admissions team.
+          </p>
+        </section>
+
+        <section id="contact">
+          <h2 class="font-display text-2xl md:text-3xl mb-4">Contact</h2>
+          <p class="text-muted leading-relaxed">
+            Questions about these terms? Email{" "}
+            <a href={`mailto:${site.email}`} class="text-wine underline underline-offset-2 hover:text-gold-ink transition-colors">{site.email}</a>
+            {" "}or call{" "}
+            <a href={`tel:${site.phoneHref}`} class="text-wine underline underline-offset-2 hover:text-gold-ink transition-colors">{site.phone}</a>.
+          </p>
+        </section>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
