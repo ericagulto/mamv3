@@ -25,18 +25,34 @@ function upToRoot(outDir: string, file: string): string {
   return depth === 0 ? "./" : "../".repeat(depth);
 }
 
+function toRelative(outDir: string, up: string, path: string): string {
+  if (path.startsWith("//")) return path; // protocol-relative, leave alone
+  const [bare, hash] = path.split("#");
+  const target = bare.replace(/\/index\.html$/, "").replace(/^\//, "").replace(/\/$/, "");
+  const suffix = hash ? `#${hash}` : "";
+  if (!target) return `${up}index.html${suffix}`;
+  const isDirectory = existsSync(join(outDir, target, "index.html"));
+  return `${up}${target}${isDirectory ? "/index.html" : ""}${suffix}`;
+}
+
 function htmlRewriter(outDir: string, file: string) {
   const up = upToRoot(outDir, file);
   return (source: string) =>
     source
-      .replace(/\b(href|src)="(\/[^"]*)"/g, (_m, attr: string, path: string) => {
-        if (path.startsWith("//")) return `${attr}="${path}"`; // protocol-relative, leave alone
-        const [bare, hash] = path.split("#");
-        const target = bare.replace(/\/index\.html$/, "").replace(/^\//, "").replace(/\/$/, "");
-        const suffix = hash ? `#${hash}` : "";
-        if (!target) return `${attr}="${up}index.html${suffix}"`;
-        const isDirectory = existsSync(join(outDir, target, "index.html"));
-        return `${attr}="${up}${target}${isDirectory ? "/index.html" : ""}${suffix}"`;
+      .replace(/\b(href|src)="(\/[^"]*)"/g, (_m, attr: string, path: string) => `${attr}="${toRelative(outDir, up, path)}"`)
+      // srcset is a comma-separated candidate list, so it needs its own pass:
+      // the mobile hero frame is picked through it and was left root-absolute.
+      .replace(/\bsrcset="([^"]*)"/g, (_m, list: string) => {
+        const candidates = list
+          .split(",")
+          .map((c) => c.trim())
+          .filter(Boolean)
+          .map((c) => {
+            const [url, ...descriptor] = c.split(/\s+/);
+            const rewritten = url.startsWith("/") ? toRelative(outDir, up, url) : url;
+            return [rewritten, ...descriptor].join(" ");
+          });
+        return `srcset="${candidates.join(", ")}"`;
       })
       .replace(/\bcontent="(\d+;url=)\/([^"]*)"/g, (_m, head: string, path: string) => {
         const target = path.replace(/\/$/, "").replace(/\/index\.html$/, "");
