@@ -90,26 +90,45 @@ const isActive = (href: string) =>
 </header>
 
 <style>
+  /* Solid by default: the bar carries white type over whatever the page scrolls
+     beneath it, so an unreadable nav is the failure mode if no script runs. The
+     transparent-over-hero state is opt-in, applied synchronously below. */
   .nav {
+    background: rgb(37 0 16 / 0.92);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    background: transparent;
   }
-  /* Subtle scrim so nav text stays readable over bright hero imagery */
+  /* Subtle scrim so nav text stays readable over bright hero imagery — only
+     while the bar itself is transparent. */
   .nav-scrim {
     background: linear-gradient(to bottom, rgb(37 0 16 / 0.55), rgb(37 0 16 / 0));
-  }
-  .nav-scrolled .nav-scrim,
-  .nav.nav-solid .nav-scrim {
     opacity: 0;
+    transition: opacity 0.3s ease;
   }
-  .nav-scrolled,
-  .nav.nav-solid {
+  .nav.nav-js {
+    background: transparent;
+  }
+  .nav.nav-js:not(.nav-scrolled) .nav-scrim {
+    opacity: 1;
+  }
+  .nav.nav-js.nav-scrolled {
     background: rgb(37 0 16 / 0.92);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 2px 16px rgb(0 0 0 / 0.25);
   }
 </style>
+
+<!-- Runs during parse, before first paint: no flash of the wrong state, and it
+     cannot be taken down by a failure in the animation bundle. -->
+<script is:inline>
+  const nav = document.getElementById("site-nav");
+  if (nav) {
+    nav.classList.add("nav-js");
+    const setScrolled = () => nav.classList.toggle("nav-scrolled", window.scrollY > 40);
+    window.addEventListener("scroll", setScrolled, { passive: true });
+    setScrolled();
+  }
+</script>
 
 <script>
   const toggle = document.getElementById("menu-toggle");

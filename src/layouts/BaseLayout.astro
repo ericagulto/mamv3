@@ -95,13 +95,6 @@ const ogUrl = new URL(ogImage, Astro.site);
 
       gsap.registerPlugin(ScrollTrigger);
 
-      const navbar = document.getElementById("site-nav");
-      const onScroll = () => {
-        navbar?.classList.toggle("nav-scrolled", window.scrollY > 40);
-      };
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
-
       const reduced = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
