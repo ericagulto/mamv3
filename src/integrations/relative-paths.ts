@@ -2,7 +2,10 @@
    `dist/` gets published from wherever it lands — a GitHub Pages project
    subpath, a domain root, or a double-clicked file — and root-absolute hrefs
    only work at a domain root. After the build, every internal URL is rewritten
-   to be relative to the file that carries it. */
+   to be relative to the file that carries it.
+   Directory routes resolve to an explicit `index.html` rather than a bare
+   trailing slash: a server maps `/about/` to its index, but the file:// scheme
+   just shows a folder listing, and the literal file works in all three. */
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,12 +36,12 @@ function htmlRewriter(outDir: string, file: string) {
         const suffix = hash ? `#${hash}` : "";
         if (!target) return `${attr}="${up}index.html${suffix}"`;
         const isDirectory = existsSync(join(outDir, target, "index.html"));
-        return `${attr}="${up}${target}${isDirectory ? "/" : ""}${suffix}"`;
+        return `${attr}="${up}${target}${isDirectory ? "/index.html" : ""}${suffix}"`;
       })
       .replace(/\bcontent="(\d+;url=)\/([^"]*)"/g, (_m, head: string, path: string) => {
         const target = path.replace(/\/$/, "").replace(/\/index\.html$/, "");
         const isDirectory = target !== "" && existsSync(join(outDir, target, "index.html"));
-        return `content="${head}${up}${target}${isDirectory ? "/" : ""}"`;
+        return `content="${head}${up}${target}${isDirectory ? "/index.html" : ""}"`;
       })
       .replace(/url\(\/([^)]*)\)/g, (_m, path: string) => `url(${up}${path.replace(/\/$/, "")})`);
 }
